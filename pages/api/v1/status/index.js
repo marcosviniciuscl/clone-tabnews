@@ -12,9 +12,11 @@ async function status(resquest, response) {
   const databaseVersionResult = await database.query("SHOW server_version;");
   const databaseVersionValue = databaseVersionResult.rows[0].server_version;
 
-  const databaseOpenedConnectionsResult = await database.query(
-    `SELECT COUNT(*)::int AS opened_connections FROM pg_stat_activity WHERE datname = '${process.env.POSTGRES_DB}';`,
-  );
+  const databaseName = process.env.POSTGRES_DB;
+  const databaseOpenedConnectionsResult = await database.query({
+    text: "SELECT COUNT(*)::int AS opened_connections FROM pg_stat_activity WHERE datname = $1;",
+    values: [databaseName]
+  });
   const databaseOpenedConnectionsValue =
     databaseOpenedConnectionsResult.rows[0].opened_connections;
 
