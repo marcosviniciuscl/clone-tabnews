@@ -1,6 +1,6 @@
 [phases.setup]
 # nixLibs = ["...", "libuuid", "libGL"]
-nixPkgs = ['nodejs']
+nixPkgs = ['nodejs_18']
 
 [phases.install]
 cmds = ['npm install']
